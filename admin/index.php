@@ -1,4 +1,4 @@
-<?php include('include/header.php');?>
+<?php include('../include/header.php');?>
    
 
                      <div class="container-fluid px-4">
@@ -26,4 +26,4 @@
                                 </div>
                      </div>
 
-    <?php include('include/footer.php');?>
+    <?php include('../include/footer.php');?>

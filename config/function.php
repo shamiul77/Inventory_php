@@ -3,15 +3,21 @@ session_start();
 
 require 'connection.php';
 
-// validation of input field
+
 function validate($data){
     global $conn;
-    $validatedData = mysqli_real_escape_string($conn, $data);
-    return trim($validatedData);
+    if ($conn) {
+        $validatedData = mysqli_real_escape_string($conn, $data);
+        return trim($validatedData);
+    } else {
+        die("Database connection failed");
+    }
 }
 
+
+
 // Redirect with message in page
-function $redirect($url, $status){
+function redirect($url, $status){
     $_SESSION['status'] = $status;
     header('Location: '.$url);
     exit(0);
@@ -21,13 +27,13 @@ function $redirect($url, $status){
 function message(){
     if (isset($_SESSION['status'])){
         echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-             '.$_SESSION['status'];.'
+             '.$_SESSION['status'].'
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>'
-        unset $_SESSION['status'];
-
+        </div>';
+        unset($_SESSION['status']);
     }
 }
+
 
 // Insert function
 function insert($tableName, $data){
@@ -89,7 +95,7 @@ function getById($tableName, $id){
     $id = validate($id);
 
     $query = "SELECT * FROM $table WHERE id='$id' LIMIT 1";
-    result mysqli_query($conn, $query);
+    $result = mysqli_query($conn, $query);
 
     if($result){
 
@@ -97,10 +103,11 @@ function getById($tableName, $id){
 
             $row = mysqli_fetch_assoc($result);
             $response= [
-            'status'=> 404,
+            'status'=> 200,
             'data'=> $row,
             'message'=> 'Data found'
                         ];
+                        return $response;
 
         }else{
              $response= [
@@ -125,13 +132,31 @@ function delete($tableName, $id){
     $table = validate($tableName);
     $id = validate($id);
 
-    $query = "DELETE * FROM $table WHERE id='$id' LIMIT 1";
+    $query = " DELETE  FROM $table WHERE id='$id' LIMIT 1";
     $result = mysqli_query($conn, $query);
     return $result;
 }
 
 
+function checkPeramiterId($type){
 
+    if($_GET[$type]){
+        if($_GET[$type] != ''){
+           return$_GET[$type];
+        }else{
+            echo '<h5>No Id Found</h5>';
+        }
+
+    }else{
+        echo '<h5>No Id Given</h5>';
+    }
+}
+
+
+function logout(){
+    unset ($_SESSION['loggedIn']);
+    unset ($_SESSION['loggedInUser']);
+}
 
 
 
