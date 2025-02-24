@@ -1,8 +1,15 @@
 <?php
+session_start(); // Start session
 require 'config/function.php';
 
-?>
 
+if(isset($_SESSION['loggedIn'])){
+    ?>
+    <script>window.location.href = 'admin/index.php';</script>
+    <?php
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,17 +41,6 @@ require 'config/function.php';
 </head>
 <body>
 
-
-<?php
-if(isset($_SESSION['loggedIn'])){
-    ?>
-    <script>window.location.href = 'admin/admin.php';</script>
-    <?php
-}
-
-
-
-?>
 <div class="container">
     <div class="login-container">
         <?php message();?>

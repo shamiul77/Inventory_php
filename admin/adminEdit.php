@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <?php message(); ?>
-                    <form action="adminBackend.php" method="POST">
+                    <form action="Backend.php" method="POST">
 
                     <?php 
                         if(isset($_GET['id'])){

@@ -1,14 +1,5 @@
 <?php
 require ('../config/function.php');
-// $filePath = "../config/function.php";
-
-// if (file_exists($filePath)) {
-//     // The file exists, so include it
-//     require($filePath);
-//     echo "File exists and is included.";
-// } else {
-//     echo "File does not exist.";
-// }
 
 ?>
 

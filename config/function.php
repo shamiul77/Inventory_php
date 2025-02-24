@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 require 'connection.php';
 
 
@@ -17,11 +15,15 @@ function validate($data){
 
 
 // Redirect with message in page
-function redirect($url, $status){
-    $_SESSION['status'] = $status;
-    header('Location: '.$url);
-    exit(0);
+function redirect($url, $message = '') {
+    if (!empty($message)) {
+        session_start();
+        $_SESSION['status'] = $message; 
+    }
+    header("Location: $url");
+    exit();
 }
+
 
 // Display messages 
 function message(){
@@ -30,9 +32,10 @@ function message(){
              '.$_SESSION['status'].'
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>';
-        unset($_SESSION['status']);
+        unset($_SESSION['status']); 
     }
 }
+
 
 
 // Insert function
