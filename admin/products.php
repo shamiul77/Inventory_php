@@ -5,20 +5,20 @@
                 
                 <div class="card mt-4 shadow-sm">
                     <div class="card-header">
-                        <h4 class="mt-2 float-start">Categories</h4>
-                        <a href="categoryCreate.php" class="btn btn-primary float-end">Add Category</a>
+                        <h4 class="mt-2 float-start">Products</h4>
+                        <a href="productsCreate.php" class="btn btn-primary float-end">Add Product</a>
                     </div>
                     <div class="card-body">
 
                         <?php message(); ?>
 
                         <?php
-                                    $categories = getAll('categories');
-                                    if(!$categories){
+                                    $products = getAll('products');
+                                    if(!$products){
                                         echo "<h4>Something Wrong!</h4>";
                                         return false;
                                     }
-                                    if(mysqli_num_rows($categories) > 0)
+                                    if(mysqli_num_rows($products) > 0)
                                     {
                                     ?>
                         <div class="table-responsive">
@@ -34,13 +34,13 @@
                                 </thead>
                                 <tbody>
                                     
-                                    <?php foreach($categories as $categoriesItem) : ?>
+                                    <?php foreach($products as $productsItem) : ?>
                                     <tr>
-                                        <td ><?= $categoriesItem['id'] ?></td>
-                                        <td ><?= $categoriesItem['name'] ?></td>
+                                        <td ><?= $productsItem['id'] ?></td>
+                                        <td ><?= $productsItem['name'] ?></td>
                                         <td >
                                             <?php
-                                                if($categoriesItem['status']==1){
+                                                if($productsItem['status']==1){
                                                     echo '<span class="badge bg-danger">Hidden</span>';
                                                 }else{
                                                     echo '<span class="badge bg-primary">Visible</span>';
@@ -48,8 +48,8 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="categoryEdit.php?id=<?= $categoriesItem['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                                            <a href="categoriesDelete.php?id=<?= $categoriesItem['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm ('Are you sure to delete this category?')">Delete</a>
+                                            <a href="productEdit.php?id=<?= $productsItem['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                            <a href="productDelete.php?id=<?= $productsItem['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm ('Are you sure to delete this product?')">Delete</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

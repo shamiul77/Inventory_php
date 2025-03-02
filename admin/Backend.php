@@ -133,8 +133,72 @@ if(isset($_POST['updateCategory'])){
         }else{
             redirect('categories.php', 'Something went wrong!');
         }
-
 }
+
+if(isset($_POST['saveProduct'])){
+    $categoryId = validate($_POST['categoryId']);
+    $name = validate($_POST['name']);
+    $description = validate($_POST['description']);
+    $price = validate($_POST['price']);
+    $quantity = validate($_POST['quantity']);
+    $status = isset($_POST['status']) == true ? 1:0;
+
+    $data = [
+            'category_id'=> $categoryId,
+            'name'=> $name,
+            'description'=> $description,
+            'price'=> $price,
+            'quantity'=> $quantity,
+            'status'=> $status
+
+   
+        ];
+        $result = insert('products', $data);
+
+        if($result){
+            redirect('products.php', 'Product Created Successfully!');
+        }else{
+            redirect('productsCreate.php', 'Something went wrong!');
+        }
+}
+
+
+if(isset($_POST['updateProduct'])){  
+
+    $productId = validate($_POST['productId']);
+    $productData = getById('products', $productId);
+    if(!$productData){
+        redirect ('products.php', 'No product found!');
+
+    }
+
+    $categoryId = validate($_POST['categoryId']);
+    $name = validate($_POST['name']);
+    $description = validate($_POST['description']);
+    $price = validate($_POST['price']);
+    $quantity = validate($_POST['quantity']);
+    $status = isset($_POST['status']) == true ? 1:0;
+
+    $data = [
+            'category_id'=> $categoryId,
+            'name'=> $name,
+            'description'=> $description,
+            'price'=> $price,
+            'quantity'=> $quantity,
+            'status'=> $status
+
+   
+        ];
+        $result = update('products',$productId, $data);
+
+        if($result){
+            redirect('productEdit.php?id='.$productId, 'Product Updated Successfully!');
+        }else{
+            redirect('productEdit.php?id='.$productId, 'Something went wrong!');
+        }
+}
+
+
 
 
 ?>
