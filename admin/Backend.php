@@ -199,6 +199,73 @@ if(isset($_POST['updateProduct'])){
 }
 
 
+if(isset($_POST['saveCustomer'])){
+    $name = validate($_POST['name']);
+    $email = validate($_POST['email']);
+    $phone = validate($_POST['phone']);
+    $status = isset($_POST['status']) ? 1:0;
+
+    if($name != ''){
+        $emailCheck = mysqli_query($conn, "SELECT * FROM customers WHERE email='$email'");
+        if($emailCheck){
+            if(mysqli_num_rows($emailCheck) > 0){
+                redirect('customers.php', 'Email already used, Try another');
+            }
+        }
+        $data = [
+            'name'=> $name,
+            'email'=> $email,
+            'phone'=> $phone,
+            'email'=> $email,
+            'status'=> $status
+        ];
+        $result = insert('customers', $data);
+
+        if($result){
+            redirect('customers.php', 'Customer Created Successfully!');
+        }else{
+            redirect('customers.php', 'Something went wrong!');
+        }
+    }else{
+        redirect('customers.php', 'Please fill the required fields');
+    }
+}
+
+
+if(isset($_POST['updateCustomer'])){
+    $customerId = validate($_POST['customerId']);
+    $name = validate($_POST['name']);
+    $email = validate($_POST['email']);
+    $phone = validate($_POST['phone']);
+    $status = isset($_POST['status']) ? 1:0;
+
+    if($name != ''){
+        $emailCheck = mysqli_query($conn, "SELECT * FROM customers WHERE email='$email' AND id!='$customerId'");
+        if($emailCheck){
+            if(mysqli_num_rows($emailCheck) > 0){
+                redirect('customerEdit.php?id='.$customerId, 'Email already used, Try another');
+            }
+        }
+        $data = [
+            'name'=> $name,
+            'email'=> $email,
+            'phone'=> $phone,
+            'email'=> $email,
+            'status'=> $status
+        ];
+        $result = update('customers',$customerId, $data);
+
+        if($result){
+            redirect('customerEdit.php?id='.$customerId, 'Customer Updated Successfully!');
+        }else{
+            redirect('customerEdit.php?id='.$customerId, 'Something went wrong!');
+        }
+    }else{
+        redirect('customerEdit.php?id='.$customerId, 'Please fill the required fields');
+    }
+}
+
+
 
 
 ?>

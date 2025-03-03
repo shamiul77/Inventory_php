@@ -5,20 +5,20 @@
                 
                 <div class="card mt-4 shadow-sm">
                     <div class="card-header">
-                        <h4 class="mt-2 float-start">Categories</h4>
-                        <a href="categoryCreate.php" class="btn btn-primary float-end">Add Category</a>
+                        <h4 class="mt-2 float-start">Customers</h4>
+                        <a href="customerCreate.php" class="btn btn-primary float-end">Add Customer</a>
                     </div>
                     <div class="card-body">
 
                         <?php message(); ?>
 
                         <?php
-                                    $categories = getAll('categories');
-                                    if(!$categories){
+                                    $customers = getAll('customers');
+                                    if(!$customers){
                                         echo "<h4>Something Wrong!</h4>";
                                         return false;
                                     }
-                                    if(mysqli_num_rows($categories) > 0)
+                                    if(mysqli_num_rows($customers) > 0)
                                     {
                                     ?>
                         <div class="table-responsive">
@@ -27,6 +27,8 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                         
@@ -34,13 +36,15 @@
                                 </thead>
                                 <tbody>
                                     
-                                    <?php foreach($categories as $categoriesItem) : ?>
+                                    <?php foreach($customers as $customersItem) : ?>
                                     <tr>
-                                        <td ><?= $categoriesItem['id'] ?></td>
-                                        <td ><?= $categoriesItem['name'] ?></td>
+                                        <td ><?= $customersItem['id'] ?></td>
+                                        <td ><?= $customersItem['name'] ?></td>
+                                        <td ><?= $customersItem['email'] ?></td>
+                                        <td ><?= $customersItem['phone'] ?></td>
                                         <td >
                                             <?php
-                                                if($categoriesItem['status']==1){
+                                                if($customersItem['status']==1){
                                                     echo '<span class="badge bg-danger">Hidden</span>';
                                                 }else{
                                                     echo '<span class="badge bg-primary">Visible</span>';
@@ -48,8 +52,8 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <a href="categoryEdit.php?id=<?= $categoriesItem['id']; ?>" class="btn btn-success btn-sm">Edit</a>
-                                            <a href="customerDelete.php?id=<?= $categoriesItem['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm ('Are you sure to delete this category?')">Delete</a>
+                                            <a href="customerEdit.php?id=<?= $customersItem['id']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                            <a href="customerDelete.php?id=<?= $customersItem['id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm ('Are you sure to delete this customer?')">Delete</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
