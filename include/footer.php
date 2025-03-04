@@ -29,5 +29,6 @@
                 $('.mySelect2').select2();
             });
         </script>
+        <script src="asset/js/custom.js"></script>
     </body>
 </html>

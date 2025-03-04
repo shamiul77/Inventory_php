@@ -1,12 +1,9 @@
 <?php
 session_start();
 include('../config/function.php');
-include('../config/db.php'); // Ensure database connection is available
+include('../config/db.php'); 
 
-if (!isset($_SESSION['productItem'])) {
-    $_SESSION['productItem'] = [];
-}
-
+// Handle Add Item to Order
 if (isset($_POST['addItem'])) {
     $productId = validate($_POST['productId']);
     $quantity = validate($_POST['quantity']);
@@ -26,7 +23,6 @@ if (isset($_POST['addItem'])) {
             'quantity' => $quantity
         ];
 
-        // Check if the product already exists in session
         $found = false;
         foreach ($_SESSION['productItem'] as $key => $productSessionItem) {
             if ($productSessionItem['productId'] == $row['id']) {
@@ -45,5 +41,45 @@ if (isset($_POST['addItem'])) {
     } else {
         redirect('orderCreate.php', 'No Product Found!');
     }
+}
+
+// Handle Increment / Decrement Quantity Update via AJAX
+if (isset($_POST['productIncDec'])) {
+    $productId = validate($_POST['product_id']);
+    $quantity = validate($_POST['quantity']);
+
+    $flag = false;
+    $newTotalPrice = 0;
+    
+    // Loop through the session items to find the product and update the quantity
+    foreach ($_SESSION['productItem'] as $key => $item) {
+        if ($item['productId'] == $productId) {
+            $flag = true;
+            $_SESSION['productItem'][$key]['quantity'] = $quantity;
+            
+            // Calculate the new total price
+            $newTotalPrice = $_SESSION['productItem'][$key]['price'] * $_SESSION['productItem'][$key]['quantity'];
+        }
+    }
+
+    // If updated successfully, return the new total price
+    if ($flag) {
+        $response = [
+            'status' => 200,
+            'status_type' => 'success',
+            'message' => 'Quantity Updated',
+            'newTotalPrice' => number_format($newTotalPrice, 2)
+        ];
+    } else {
+        $response = [
+            'status' => 500,
+            'status_type' => 'error',
+            'message' => 'Something Went Wrong!'
+        ];
+    }
+
+    // Return JSON response
+    echo json_encode($response);
+    exit();
 }
 ?>

@@ -72,10 +72,11 @@ include('../include/header.php');
                                     <td><?= $item['name']; ?></td>
                                     <td><?= number_format($item['price'], 2); ?></td>
                                     <td>
-                                        <div class="input-group">
-                                            <button class="input-group-text btn-decrease" data-id="<?= $key; ?>">-</button>
+                                        <div class="input-group qtyBox">
+                                            <input type="hidden" value="<?= $item['productId']; ?>">
+                                            <button class="input-group-text decrement " >-</button>
                                             <input type="text" value="<?= $item['quantity']; ?>" class="qty text-center quantityInput form-control" />
-                                            <button class="input-group-text btn-increase" data-id="<?= $i; ?>">+</button>
+                                            <button class="input-group-text increment" >+</button>
                                         </div>
                                     </td>
                                     <td><?= number_format($item['price'] * $item['quantity'], 2); ?></td>
