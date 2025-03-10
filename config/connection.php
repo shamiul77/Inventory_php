@@ -1,13 +1,15 @@
 
 
 <?php
-$servername = "localhost"; 
-$username = "root";
-$password = "";
-$dbname = "inventory";
+$host = "localhost";
+$username = "root"; 
+$password = ""; 
+$database = "inventory";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
 }
 ?>
+

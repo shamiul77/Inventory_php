@@ -1,6 +1,7 @@
 <?php 
 session_start();
 include('../include/header.php'); 
+
 ?>
 
 <div class="container-fluid px-4">
@@ -16,10 +17,9 @@ include('../include/header.php');
                 <div class="row">
                     <div class="col-md-3 mb-3">
                         <label for="">Select Product</label>
-                        <select name="productId" class="form-select mySelect2">
+                        <select name="product_id" class="form-select mySelect2">
                             <option value="">-- Select Product --</option>
                             <?php
-                                include('../config/db.php');
                                 $products = getAll('products');
                                 if ($products && mysqli_num_rows($products) > 0) {
                                     foreach ($products as $productsItem) {
@@ -33,12 +33,12 @@ include('../include/header.php');
                     </div>
                     <div class="col-md-2 mb-3">
                         <label for="">Quantity</label>
-                        <input type="number" name="quantity" value="1" class="form-control" min="1" />
+                        <input type="number" name="quantity" value="1" class="form-control"  />
                     </div>
 
-                    <div class="col-md-3 text-end mb-3">
-                        <br>
-                        <button type="submit" name="addItem" class="btn btn-primary">Add Item</button>
+                    <div class="col-md-3 text-end mb-3 mt-3">
+                        
+                        <button type="submit" name="addItem" class="btn btn-primary ">Add Item</button>
                     </div>
                 </div>
             </form>
@@ -50,7 +50,11 @@ include('../include/header.php');
             <h4 class="mb-0">Products</h4>
         </div>
         <div class="card-body">
-            <?php if (!empty($_SESSION['productItem'])): ?>
+            <?php 
+            if (isset($_SESSION['productItem'])){
+
+                $sessionProducts = $_SESSION['productItem'];
+                ?>
                 <div class="table-responsive mb-3">
                     <table class="table table-bordered table-striped">
                         <thead>
@@ -66,31 +70,37 @@ include('../include/header.php');
                         <tbody>
                             <?php
                             $i=1; 
-                            foreach ($_SESSION['productItem'] as $key => $item): ?>
+                            foreach ($sessionProducts as $key => $item): 
+                            ?>
                                 <tr>
-                                    <td><?= $item['productId']; ?></td>
+                                    <td><?= $i++ ?></td>
                                     <td><?= $item['name']; ?></td>
-                                    <td><?= number_format($item['price'], 2); ?></td>
+                                    <td><?= $item['price']; ?></td>
                                     <td>
                                         <div class="input-group qtyBox">
-                                            <input type="hidden" value="<?= $item['productId']; ?>">
+                                            <input type="hidden" value="<?= $item['product_id']; ?>" class="prodId"/>
                                             <button class="input-group-text decrement " >-</button>
                                             <input type="text" value="<?= $item['quantity']; ?>" class="qty text-center quantityInput form-control" />
                                             <button class="input-group-text increment" >+</button>
                                         </div>
                                     </td>
-                                    <td><?= number_format($item['price'] * $item['quantity'], 2); ?></td>
+
+                                    <td><?= number_format($item['price'] * $item['quantity'], 0); ?></td>
                                     <td>
                                         <a href="orderItemDelete.php?index=<?= $key; ?>" class="btn btn-danger">Remove</a>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+                                    <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
-            <?php else: ?>
-                <h5>No Item Added!</h5>
-            <?php endif; ?>
+                <?php
+                }
+                else{
+                    echo '<h5>No Items Added!</h5>';
+                }
+                ?>
+            
         </div>
     </div>
 </div>

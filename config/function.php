@@ -168,7 +168,7 @@ function jsonResponse($status,$status_type, $message ){
             'status_type' => $status_type,
             'message' => $message
     ];
-        echo json_encode($response);
+        print_r (json_encode($response));
         return;
 }
 

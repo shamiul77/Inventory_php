@@ -1,8 +1,7 @@
 $(document).ready(function () {
-    // Increment button click handler
     $(document).on('click', '.increment', function () {
         var $quantityInput = $(this).closest('.qtyBox').find('.qty');
-        var productId = $(this).closest('.qtyBox').find('.proId').val();
+        var productId = $(this).closest('.qtyBox').find('.prodId').val();
         var currentValue = parseInt($quantityInput.val());
 
         if (!isNaN(currentValue)) {
@@ -12,7 +11,6 @@ $(document).ready(function () {
         }
     });
 
-    // Decrement button click handler
     $(document).on('click', '.decrement', function () {
         var $quantityInput = $(this).closest('.qtyBox').find('.qty');
         var productId = $(this).closest('.qtyBox').find('.proId').val();
@@ -25,39 +23,33 @@ $(document).ready(function () {
         }
     });
 
-    // Function to update quantity via AJAX
-    function quantityIncDec(proId, qty) {
+
+    function quantityIncDec(prodId, qty) {
+
         $.ajax({
             type: "POST",
             url: "ordersBackend.php",
             data: {
                 'productIncDec': true,
-                'product_id': proId,
+                'product_id': prodId,
                 'quantity': qty,
             },
             success: function (response) {
                 var res = JSON.parse(response);
-
+                console.log(res);
                 if (res.status == 200) {
-                    // Update the price in the table
-                    updatePrice(proId, res.newTotalPrice);
+                    
+                    
                     alertify.success(res.message);
+
                 } else {
                     alertify.error(res.message);
                 }
-            },
-        });
-    }
-
-    // Function to update price in the table
-    function updatePrice(proId, newTotalPrice) {
-        // Find the row containing the product and update the price
-        $("tr").each(function () {
-            var $row = $(this);
-            var productRowId = $row.find('.proId').val();
-            if (productRowId == proId) {
-                $row.find('.totalPrice').text(newTotalPrice); // Update total price in the table
             }
         });
     }
 });
+            
+
+
+
