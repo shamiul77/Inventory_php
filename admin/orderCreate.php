@@ -105,20 +105,6 @@ include('../include/header.php');
     </div>
 </div>
 
-<script>
-    document.querySelectorAll('.btn-decrease').forEach(button => {
-        button.addEventListener('click', function () {
-            let productId = this.getAttribute('data-id');
-            window.location.href = "updateOrderQuantity.php?action=decrease&index=" + productId;
-        });
-    });
 
-    document.querySelectorAll('.btn-increase').forEach(button => {
-        button.addEventListener('click', function () {
-            let productId = this.getAttribute('data-id');
-            window.location.href = "updateOrderQuantity.php?action=increase&index=" + productId;
-        });
-    });
-</script>
 
 <?php include('../include/footer.php'); ?>

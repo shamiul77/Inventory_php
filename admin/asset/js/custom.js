@@ -36,7 +36,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 var res = JSON.parse(response);
-                console.log(res);
+
                 if (res.status == 200) {
                     
                     
