@@ -10,7 +10,7 @@
                     </div>
                     <div class="card-body">
                         <?php message(); ?>
-                    <form action="adminBackend.php" method="POST">
+                    <form action="Backend.php" method="POST">
                         <div class="row">
                             <div class="col-md-12 mb-3">
                                 <label for="">Name*</label>

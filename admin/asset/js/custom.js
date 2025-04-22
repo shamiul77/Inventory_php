@@ -48,8 +48,66 @@ $(document).ready(function () {
             }
         });
     }
-});
-            
 
+
+
+    //Place order
+    
+$(document).on('click', '.placeOrder', function () {
+
+    var paymentMethod = $('#payment_method').val();
+    var customerPhone = $('#customerPhone').val();
+
+    if (paymentMethod == '') {
+        Swal.fire("Select Payment Method", "Select Your Payment Method", "warning");
+        return false;
+    }
+
+    if (customerPhone == '' && !$.isNumeric(customerPhone)) {
+        Swal.fire("Enter Customer Phone Number", "Enter valid Phone Number", "warning");
+        return false;
+    }
+
+
+    var data = {
+        'placeOrder': true,
+        'customerPhone': customerPhone,
+        'payment_method': paymentMethod
+
+    };
+    $.ajax({
+            type: "POST",
+            url: "ordersBackend.php",
+        data: data,
+        success: function (response) {
+    var res = JSON.parse(response);
+    if (res.status == 200) {
+        window.location.href = "orderSummery.php";
+    } else if (res.status == 404) {
+        Swal.fire({
+            title: res.message,
+            text: res.message,
+            icon: res.status_type,
+            showCancelButton: true,
+            confirmButtonText: "Add Customer",
+            cancelButtonText: "Cancel"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#addCustomerModal').modal('show');
+            }
+        });
+    } else {
+        Swal.fire(res.message, res.message, res.status_type);
+    }
+}
+
+
+    });
+    
+
+
+}); 
+}); 
+            
 
 

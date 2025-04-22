@@ -4,6 +4,38 @@ include('../include/header.php');
 
 ?>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Customer</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+            <label >Enter Customer Name</label>
+            <input type="text" class="form-control" id="customerName"/>
+        </div>
+        <div class="mb-3">
+            <label >Enter Phone Number</label>
+            <input type="number" class="form-control" id="customerPhone"/>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary saveCustomer" >Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="container-fluid px-4">
     <div class="card mt-4 shadow-sm">
         <div class="card-header">
@@ -93,6 +125,31 @@ include('../include/header.php');
                                     <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="mt-2">
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="">Select Payment Mode</label>
+                            <select id="payment_method" class="form-select">
+                                <option value="">-- Select Payment --</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Bkash">Bkash</option>
+                                <option value="Rocket">Rocket</option>
+                                <option value="Nagad">Nagad</option>
+                                <option value="Card">Card</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Customer phone Number</label>
+                            <input type="number" id="customerPhone" class="form-control" value=""/>
+                        </div>
+                        <div class="col-md-4">
+                            <br>
+                            <button type="button" class="btn btn-warning w-100 placeOrder">Place Order</button>
+                        </div>
+                    </div>
                 </div>
                 <?php
                 }

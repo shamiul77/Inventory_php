@@ -95,5 +95,33 @@ if (isset($_POST['productIncDec'])) {
 }
 
 
+if (isset($_POST['placeOrder'])) {
+    $phone = validate($_POST['customerPhone']);
+    $paymentMethod = validate($_POST['payment_method']) ;
+
+    $checkCustomer = mysqli_query($conn, "SELECT * FROM customers WHERE phone='$phone' LIMIT 1");
+    if($checkCustomer){
+        if(mysqli_num_rows($checkCustomer) > 0){
+            $_SESSION['Invoice_Number'] = "INVOICE-".rand(111111,999999);
+            $_SESSION['customerPhone'] = $phone;
+            $_SESSION['paymentMethod'] = $paymentMethod;
+        jsonResponse(200,'success','Customer found!' );
+
+
+        }else{
+             $_SESSION['customerPhone'] = $phone;
+        jsonResponse(404,'warning','Customer Not found!' );
+        }
+    }else{
+        jsonResponse();
+        jsonResponse(500,'error','Something Went Wrong!' );
+    }
+
+}
+
+
+
+
+
 
 ?>
